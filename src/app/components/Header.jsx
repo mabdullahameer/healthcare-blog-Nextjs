@@ -2,35 +2,35 @@
 import { Button, Navbar, TextInput } from 'flowbite-react';
 import Link from 'next/link';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { FaMoon } from 'react-icons/fa';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
-// import { useTheme } from 'next-themes';
-// import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
-// import { dark, light } from '@clerk/themes';
-// import { useEffect, useState } from 'react';
-// import { useRouter, useSearchParams } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { dark, light } from '@clerk/themes';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 export default function Header() {
   const path = usePathname();
-//   const { theme, setTheme } = useTheme();
-//   const router = useRouter();
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const searchParams = useSearchParams();
+  const { theme, setTheme } = useTheme();
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
+  const searchParams = useSearchParams();
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const urlParams = new URLSearchParams(searchParams);
-//     urlParams.set('searchTerm', searchTerm);
-//     const searchQuery = urlParams.toString();
-//     router.push(`/search?${searchQuery}`);
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(searchParams);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    router.push(`/search?${searchQuery}`);
+  };
 
-//   useEffect(() => {
-//     const urlParams = new URLSearchParams(searchParams);
-//     const searchTermFromUrl = urlParams.get('searchTerm');
-//     if (searchTermFromUrl) {
-//       setSearchTerm(searchTermFromUrl);
-//     }
-//   }, [searchParams]);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(searchParams);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [searchParams]);
   return (
     <Navbar className='border-b-2'>
       <Link
@@ -38,18 +38,18 @@ export default function Header() {
         className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
       >
         <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-          HealthCare-Blogs&apos;s
+          HealthCare&apos;s
         </span>
-        Blog
+        Blogs
       </Link>
-      {/* <form onSubmit={handleSubmit}> */} <form>
+      <form onSubmit={handleSubmit}>
         <TextInput
           type='text'
           placeholder='Search...'
           rightIcon={AiOutlineSearch}
           className='hidden lg:inline'
-        //   value={searchTerm}
-        //   onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
       <Button className='w-12 h-10 lg:hidden' color='gray' pill>
@@ -59,26 +59,26 @@ export default function Header() {
         <Button
           className='w-12 h-10 hidden sm:inline'
           color='gray'
-          pill>
-        {/* //   onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} */}
-        <FaMoon />
-          {/* {theme === 'light' ? <FaSun /> : <FaMoon />} */}
+          pill
+          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        >
+          {theme === 'light' ? <FaSun /> : <FaMoon />}
         </Button>
-        {/* <SignedIn>
+        <SignedIn>
           <UserButton
             appearance={{
               baseTheme: theme === 'light' ? light : dark,
             }}
             userProfileUrl='/dashboard?tab=profile'
           />
-        </SignedIn> */}
-        {/* <SignedOut> */}
+        </SignedIn>
+        <SignedOut>
           <Link href='/sign-in'>
             <Button gradientDuoTone='purpleToBlue' outline>
               Sign In
             </Button>
           </Link>
-        {/* </SignedOut> */}
+        </SignedOut>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
@@ -92,22 +92,11 @@ export default function Header() {
             About
           </Navbar.Link>
         </Link>
-        <Link href='/contact'>
-          <Navbar.Link active={path === '/contact'} as={'div'}>
-            Contact Us
-          </Navbar.Link>
-        </Link>
         <Link href='/projects'>
           <Navbar.Link active={path === '/projects'} as={'div'}>
             Projects
           </Navbar.Link>
         </Link>
-        <Link href='/products'>
-          <Navbar.Link active={path === '/products'} as={'div'}>
-            Products
-          </Navbar.Link>
-        </Link>
-        
       </Navbar.Collapse>
     </Navbar>
   );
